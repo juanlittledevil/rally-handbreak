@@ -75,12 +75,12 @@ uint8_t const * tud_descriptor_device_cb(void)
 // HID Report Descriptor
 //--------------------------------------------------------------------+
 
-uint8_t const desc_hid_report[] =
-{
+// ...existing code...
+uint8_t const desc_hid_report[] = {
     0x05, 0x01,        // Usage Page (Generic Desktop)
     0x09, 0x04,        // Usage (Joystick)
     0xA1, 0x01,        // Collection (Application)
-        0x09, 0x30,    //   Usage (X)
+        0x09, 0x32,    //   Usage (Z) -- for trigger/handbrake
         0x15, 0x00,    //   Logical Minimum (0)
         0x26, 0xFF, 0xFF, // Logical Maximum (65535)
         0x75, 0x10,    //   Report Size (16)

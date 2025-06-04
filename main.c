@@ -38,7 +38,7 @@
 #define DEBUG_PRINT false
 
 typedef struct {
-    uint16_t x;
+    uint16_t z;
 } __attribute__((packed)) joystick_report_t;
 
 static uint32_t blink_interval_ms = 250;
@@ -88,7 +88,7 @@ void tud_resume_cb(void)
 void send_joystick_report(uint16_t value)
 {
     static joystick_report_t report;
-    report.x = value;
+    report.z = value;
 
     if (tud_hid_ready()) {
         tud_hid_report(0, &report, sizeof(report));
@@ -110,9 +110,8 @@ void hid_task(void)
     if (clamped < DEADZONE_MIN) clamped = DEADZONE_MIN;
     if (clamped > ADC_MAX) clamped = ADC_MAX;
 
-    // Scale to 0-65535
-    uint16_t scaled = (uint32_t)(clamped - DEADZONE_MIN) * 65535 / (ADC_MAX - DEADZONE_MIN);
-
+    // Scale to 0-32767, which is half the range for the joystick report
+    uint16_t scaled = (uint32_t)(clamped - DEADZONE_MIN) * 32767 / (ADC_MAX - DEADZONE_MIN);
     if (DEBUG_PRINT) printf("ADC raw: %u, clamped: %u, scaled: %u\n", raw, clamped, scaled); // Debug print
 
     send_joystick_report(scaled);
