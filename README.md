@@ -15,9 +15,11 @@ This project presents a minimal composite USB device:
 - Debug output over USB serial for easy calibration and troubleshooting.
 - Onboard LED blinks to indicate device status.
 
+I am using a modified version of [this project](https://www.thingiverse.com/thing:5213117) for the actual handbreak. It works great!
+
 ## Hardware
 
-- Raspberry Pi Pico (RP2040)
+- Raspberry Pi Pico (RP2040) also works with the Seeed Xiao 2040
 - Potentiometer (connected to an ADC pin, e.g., GP26/ADC0)
 
 ## Usage
