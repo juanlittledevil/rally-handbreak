@@ -33,9 +33,9 @@
 #include "tusb.h"
 #include "usb_descriptors.h"
 
-#define DEADZONE_MIN 870
-#define ADC_MAX 2010
-#define DEBUG_PRINT true
+#define DEADZONE_MIN 1230
+#define ADC_MAX 2100
+#define DEBUG_PRINT false
 
 typedef struct {
     uint16_t x;
@@ -104,15 +104,16 @@ void hid_task(void)
     start_ms += interval_ms;
 
     uint16_t raw = adc_read();
+    uint16_t clamped = raw;
 
     // Apply dead zone and clamp
-    if (raw < DEADZONE_MIN) raw = DEADZONE_MIN;
-    if (raw > ADC_MAX) raw = ADC_MAX;
+    if (clamped < DEADZONE_MIN) clamped = DEADZONE_MIN;
+    if (clamped > ADC_MAX) clamped = ADC_MAX;
 
     // Scale to 0-65535
-    uint16_t scaled = (uint32_t)(raw - DEADZONE_MIN) * 65535 / (ADC_MAX - DEADZONE_MIN);
+    uint16_t scaled = (uint32_t)(clamped - DEADZONE_MIN) * 65535 / (ADC_MAX - DEADZONE_MIN);
 
-    if (DEBUG_PRINT) printf("ADC raw: %u, scaled: %u\n", raw, scaled); // Debug print
+    if (DEBUG_PRINT) printf("ADC raw: %u, clamped: %u, scaled: %u\n", raw, clamped, scaled); // Debug print
 
     send_joystick_report(scaled);
 }
