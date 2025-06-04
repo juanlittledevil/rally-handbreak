@@ -19,7 +19,6 @@ This project presents a minimal composite USB device:
 
 - Raspberry Pi Pico (RP2040)
 - Potentiometer (connected to an ADC pin, e.g., GP26/ADC0)
-- Optional: Button or switch for additional controls
 
 ## Usage
 
@@ -32,13 +31,16 @@ This project presents a minimal composite USB device:
 
 This project uses the [Pico SDK](https://github.com/raspberrypi/pico-sdk) and [TinyUSB](https://github.com/hathach/tinyusb).
 
+Make sure you have the Raspberry Pi Pico Visual Studio Code extension installed. TinyUSB is included in the Pico SDK so no need to install separately.
+
 ```sh
 git clone <this repo>
 cd rally-handbreak
 mkdir build && cd build
-cmake ..
-make
+cmake -G Ninja ..
 ```
+
+Use the Pico SDK 'Compile' and 'Run' buttons to build and flash.
 
 ## Customization
 
